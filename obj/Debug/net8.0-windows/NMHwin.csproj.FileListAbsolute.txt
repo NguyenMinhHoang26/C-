@@ -25,3 +25,11 @@ C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.Form5.resource
 C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.Form6.resources
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\eat.png
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\b52.png
+C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.sourcelink.json
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\fish.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\hook.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\rod.png
+C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.Form7.resources
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\boat.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\water_bg.jpg
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\fish_flip.png

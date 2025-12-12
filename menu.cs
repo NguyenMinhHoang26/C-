@@ -95,5 +95,12 @@ namespace NMHwin
 
             newForm.Show();
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Form7 newForm = new Form7();
+
+            newForm.Show();
+        }
     }
 }
