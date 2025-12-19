@@ -32,6 +32,10 @@ namespace NMHwin
         int boatWaveOffset = 0;
         int boatDirection = 1; // 1 = sang phải, -1 = sang trái
         int boatSpeed = 2;     // tốc độ thuyền
+        int level = 1;  // Initial level
+        int scoreForNextLevel = 5;  // Number of points needed to level up
+
+
         public Form7()
         {
             InitializeComponent();
@@ -74,7 +78,8 @@ namespace NMHwin
             for (int i = 0; i < 5; i++) SpawnFish();
             for (int i = 0; i < 2; i++) SpawnBomb();
 
-            this.Text = "Điểm: 0";
+            this.Text = "Điểm: 0 | Level: " + level;  // Update the title to include level
+
         }
 
         private void AnimateBoat(object sender, EventArgs e)
@@ -126,6 +131,12 @@ namespace NMHwin
             // --- Đảm bảo cá và bom nổi trên sóng ---
             foreach (var f in fishes) f.Pb.BringToFront();
             foreach (var b in bombs) b.Pb.BringToFront();
+
+            // Vẽ điểm số và cấp độ trực tiếp trên màn hình
+            Font font = new Font("Arial", 16, FontStyle.Bold);
+            Brush brush = Brushes.Black;
+            string text = "Điểm: " + score + " | Level: " + level;
+            g.DrawString(text, font, brush, new PointF(10, 10));  // Điều chỉnh vị trí theo nhu cầu
         }
 
         private void AnimateHook(object sender, EventArgs e)
@@ -193,13 +204,29 @@ namespace NMHwin
                         hookHasFish = false;
                         caughtFish = null;
                         score++;
-                        this.Text = "Điểm: " + score;
+                        this.Text = "Điểm: " + score + " | Level: " + level;
+
+
+                        // Check for level up
+                        if (score >= level * scoreForNextLevel)  // Check if player has enough points for next level
+                        {
+                            level++;
+                            scoreForNextLevel *= 2;  // Increase the difficulty for the next level
+                            IncreaseDifficulty();    // Call method to increase difficulty
+                        }
+
                         SpawnFish();
                     }
+
                 }
             }
 
             Invalidate();
+        }
+        private void IncreaseDifficulty()
+        {
+            boatSpeed++;
+            for (int i = 0; i < 2; i++) SpawnBomb();
         }
 
         private void AnimateFish(object sender, EventArgs e)

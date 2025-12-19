@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
@@ -24,11 +26,12 @@ namespace NMHwin
         int xDeltaChicken = 2;
 
         int score = 0;
-        int lives = 3;
+        int lives = 1;
         bool isGameOver = false;
+        int level = 0;
+
 
         List<Egg> eggs = new List<Egg>();
-
         Random rand = new Random();
 
         public Form5()
@@ -38,7 +41,18 @@ namespace NMHwin
 
             Load += Form5_Load;
             KeyDown += Form5_KeyDown;
+            // Cài đặt hình nền
+            //this.BackgroundImage = Image.FromFile(@"image/america.jpg");
+            //this.BackgroundImageLayout = ImageLayout.Stretch; // Căng hình ảnh để phủ toàn bộ form
         }
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    base.OnPaint(e);
+
+        //    // Vẽ hình nền
+        //    Image background = Image.FromFile(@"image/america.jpg");
+        //    e.Graphics.DrawImage(background, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+        //}
 
         private void Form5_Load(object sender, EventArgs e)
         {
@@ -76,7 +90,7 @@ namespace NMHwin
 
         private void UpdateTitle()
         {
-            this.Text = $"Điểm: {score}  |  Mạng: {lives}";
+            this.Text = $"Điểm: {score} | Mạng: {lives} | Cấp độ: {level}";
         }
 
         // Tạo 1 quả trứng
@@ -86,9 +100,19 @@ namespace NMHwin
             e.Pb = new PictureBox();
             e.Pb.Size = new Size(40, 40);
             e.Pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            e.Pb.Image = Image.FromFile(@"image/bigboy.png");
 
-            // Trứng rơi từ con gà
+            // Chọn ngẫu nhiên trứng bình thường hoặc trứng đặc biệt
+            if (rand.Next(0, 2) == 0)
+            {
+                e.Pb.Image = Image.FromFile(@"image/bigboy.png"); // Trứng bình thường
+                e.type = EggType.Normal;
+            }
+            else
+            {
+                e.Pb.Image = Image.FromFile(@"image/special_egg.png"); // Trứng đặc biệt
+                e.type = EggType.Special;
+            }
+
             e.x = xChicken + pbChicken.Width / 2 - 20;
             e.y = yChicken + pbChicken.Height;
 
@@ -113,50 +137,81 @@ namespace NMHwin
             {
                 Egg eg = eggs[i];
                 if (isGameOver) return;
+
                 if (!eg.broken)
                 {
                     eg.y += 2;
                     eg.x += (int)(Math.Sin(eg.y / 10.0) * 2); // rung trái phải
                     eg.Pb.Location = new Point(eg.x, eg.y);
 
-                    // Va chạm giỏ
+                    // Kiểm tra va chạm với giỏ
                     if (eg.Pb.Bounds.IntersectsWith(pbBasket.Bounds))
                     {
                         eg.broken = true;
-                        //eg.Pb.Image = Image.FromFile(@"image/boom.png");
 
-                        // Hiệu ứng bay lên
-                        ShowFloatingScore(eg.x, eg.y);
+                        // Nếu là trứng đặc biệt
+                        if (eg.type == EggType.Special)
+                        {
+                            score += 2;  // Thưởng điểm gấp đôi cho trứng đặc biệt
+                            PlaySound("special_egg_catch.wav"); // Phát âm thanh cho trứng đặc biệt
+                        }
+                        else
+                        {
+                            score++;// Trứng bình thường cộng 1 điểm
+                            PlaySound("egg_catch.wav"); // Phát âm thanh cho trứng bình thường
+                        }
 
-                        score++;
-                        UpdateTitle();
+                        ShowFloatingScore(eg.x, eg.y);  // Hiệu ứng điểm bay lên
+                        UpdateTitle();  // Cập nhật lại điểm và mạng
+                        RemoveEggLater(eg, 300);  // Loại bỏ trứng sau một thời gian
 
-                        RemoveEggLater(eg, 300);
+                        // Gọi hàm IncreaseLevel khi đạt đủ điểm để lên cấp
+                        if (score % 10 == 0)  // Khi đạt 10 điểm, tăng cấp độ
+                        {
+                            IncreaseLevel();
+                        }
+
                         continue;
                     }
 
-                    // Chạm đất
+                    // Kiểm tra nếu trứng chạm đất
                     if (eg.y > this.ClientSize.Height - eg.Pb.Height)
                     {
                         eg.broken = true;
-                        eg.Pb.Image = Image.FromFile(@"image/boom.png");
+                        eg.Pb.Image = Image.FromFile(@"image/boom.png"); // Hình ảnh khi trứng vỡ
 
-                        lives--;
-                        UpdateTitle();
+                        lives--;  // Mất mạng khi trứng rơi xuống đất
+                        PlaySound("game_over.wav");
+                        UpdateTitle();  // Cập nhật lại điểm và mạng
 
                         if (lives <= 0)
                         {
-                            GameOver();
+                            GameOver();  // Kết thúc trò chơi nếu hết mạng
                             return;
                         }
 
-                        RemoveEggLater(eg, 350);
+                        RemoveEggLater(eg, 350);  // Loại bỏ trứng sau khi chạm đất
                         continue;
                     }
                 }
             }
         }
 
+
+        // Phát âm thanh
+        private void PlaySound(string soundFile)
+        {
+            try
+            {
+                SoundPlayer player = new SoundPlayer(@"sounds/" + soundFile);
+                player.Play();
+            }
+            catch (Exception)
+            {
+                // Nếu không tìm thấy tệp âm thanh
+                Console.WriteLine("Không thể phát âm thanh.");
+            }
+        }
 
         private void RemoveEggLater(Egg e, int delay)
         {
@@ -195,10 +250,11 @@ namespace NMHwin
                 this.Close();
             }
         }
+
         private void ShowFloatingScore(int x, int y)
         {
-            Label lb = new Label();
-            lb.Text = "+1";
+            System.Windows.Forms.Label lb = new System.Windows.Forms.Label();
+            lb.Text = "Boom";
             lb.Font = new Font("Arial", 16, FontStyle.Bold);
             lb.ForeColor = Color.Gold;
             lb.BackColor = Color.Transparent;
@@ -228,12 +284,13 @@ namespace NMHwin
 
             t.Start();
         }
+
         private void RestartGame()
         {
             isGameOver = false;
 
             score = 0;
-            lives = 3;
+            lives = 1;
 
             this.Text = "Điểm số: 0";
 
@@ -253,6 +310,7 @@ namespace NMHwin
             tmEgg.Start();
             tmSpawn.Start();
         }
+
         private void ResetEgg()
         {
             // Xóa toàn bộ trứng còn trên màn hình
@@ -267,6 +325,7 @@ namespace NMHwin
 
             eggs.Clear();  // Xóa danh sách trứng
         }
+
         private void tmChicken_Tick(object sender, EventArgs e)
         {
             if (isGameOver) return;  // ⛔ DỪNG NGAY – KHÔNG DI CHUYỂN GÀ
@@ -299,6 +358,21 @@ namespace NMHwin
 
             pbBasket.Location = new Point(xBasket, yBasket);
         }
+
+        private void IncreaseLevel()
+        {
+            level++;  // Tăng cấp độ
+            tmEgg.Interval = Math.Max(5, tmEgg.Interval - 2); // Tăng tốc độ rơi trứng
+            tmSpawn.Interval = Math.Max(800, tmSpawn.Interval - 100); // Tăng tốc độ tạo trứng
+            xDeltaChicken++;  // Tăng tốc độ di chuyển của gà
+        }
+
+    }
+
+    enum EggType
+    {
+        Normal,
+        Special
     }
 
     // CLASS TRỨNG
@@ -307,6 +381,7 @@ namespace NMHwin
         public PictureBox Pb;
         public int x, y;
         public bool broken = false;
+        public EggType type; // Thêm loại trứng
+
     }
 }
-    

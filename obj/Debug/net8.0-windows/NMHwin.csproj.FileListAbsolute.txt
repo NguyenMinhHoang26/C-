@@ -33,3 +33,7 @@ C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.Form7.resource
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\boat.png
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\water_bg.jpg
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\fish_flip.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\maluse_egg.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\special_egg.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\america.jpg
+C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.Form8.resources

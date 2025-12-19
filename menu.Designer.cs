@@ -36,6 +36,7 @@ namespace NMHwin
             button5 = new Button();
             button6 = new Button();
             button7 = new Button();
+            button8 = new Button();
             SuspendLayout();
             // 
             // button1
@@ -74,7 +75,7 @@ namespace NMHwin
             button4.Name = "button4";
             button4.Size = new Size(94, 29);
             button4.TabIndex = 5;
-            button4.Text = "caculation";
+            button4.Text = "luck or badluck";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
@@ -108,11 +109,22 @@ namespace NMHwin
             button7.UseVisualStyleBackColor = true;
             button7.Click += button7_Click;
             // 
+            // button8
+            // 
+            button8.Location = new Point(270, 85);
+            button8.Name = "button8";
+            button8.Size = new Size(94, 29);
+            button8.TabIndex = 7;
+            button8.Text = "form8";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
             // menu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(961, 450);
+            Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(button4);
             Controls.Add(button5);
@@ -139,5 +151,6 @@ namespace NMHwin
         private Button button5;
         private Button button6;
         private Button button7;
+        private Button button8;
     }
 }

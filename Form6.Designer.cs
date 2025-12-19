@@ -1,84 +1,77 @@
-﻿
-
-namespace NMHwin
+﻿namespace NMHwin
 {
     partial class Form6
     {
-        // Khai báo các Controls (Slide 77)
-        private System.Windows.Forms.Button btMul;
-        private System.Windows.Forms.Button btEquals;
-        private System.Windows.Forms.Button btPlus;
+        private System.ComponentModel.IContainer components = null;
 
-        // Khai báo các nút số (chỉ ví dụ)
-        private System.Windows.Forms.Button bt0;
-        private System.Windows.Forms.Button bt1;
-        private System.Windows.Forms.Button bt2;
+        private System.Windows.Forms.Label lblPlayerCard;
+        private System.Windows.Forms.Label lblComputerCard;
+        private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.Button btnDraw;
 
-        // Khai báo TextBox hiển thị kết quả
-        private System.Windows.Forms.TextBox tbDisplay;
+        // Các thành phần khác như Dispose sẽ được giữ nguyên
 
-        /// <summary>
-        /// Phương thức bắt buộc cho Designer.
-        /// </summary>
         private void InitializeComponent()
         {
-            // --- Khởi tạo và Thiết lập tbDisplay ---
-            this.tbDisplay = new System.Windows.Forms.TextBox();
-            this.tbDisplay.Location = new System.Drawing.Point(12, 12);
-            this.tbDisplay.Name = "tbDisplay";
-            this.tbDisplay.Size = new System.Drawing.Size(250, 20);
-            this.tbDisplay.TabIndex = 0;
-            this.tbDisplay.Text = "0";
+            this.lblPlayerCard = new System.Windows.Forms.Label();
+            this.lblComputerCard = new System.Windows.Forms.Label();
+            this.lblResult = new System.Windows.Forms.Label();
+            this.btnDraw = new System.Windows.Forms.Button();
 
-            // --- Khởi tạo btPlus ---
-            this.btPlus = new System.Windows.Forms.Button();
-            this.btPlus.Location = new System.Drawing.Point(12, 50);
-            this.btPlus.Name = "btPlus";
-            this.btPlus.Size = new System.Drawing.Size(50, 50);
-            this.btPlus.Text = "+";
-            this.btPlus.TabIndex = 1;
+            this.SuspendLayout();
 
-            // --- Khởi tạo btEquals ---
-            this.btEquals = new System.Windows.Forms.Button();
-            this.btEquals.Location = new System.Drawing.Point(184, 162);
-            this.btEquals.Name = "btEquals";
-            this.btEquals.Size = new System.Drawing.Size(50, 50);
-            this.btEquals.Text = "=";
-            this.btEquals.TabIndex = 5;
+            // lblPlayerCard
+            this.lblPlayerCard.AutoSize = true;
+            this.lblPlayerCard.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPlayerCard.Location = new System.Drawing.Point(50, 100);  // Tách xa hơn
+            this.lblPlayerCard.Name = "lblPlayerCard";
+            this.lblPlayerCard.Size = new System.Drawing.Size(300, 27);
+            this.lblPlayerCard.TabIndex = 0;
+            this.lblPlayerCard.Text = "Your cards:";
 
-            // --- Khởi tạo bt1 ---
-            this.bt1 = new System.Windows.Forms.Button();
-            this.bt1.Location = new System.Drawing.Point(68, 106);
-            this.bt1.Name = "bt1";
-            this.bt1.Size = new System.Drawing.Size(50, 50);
-            this.bt1.Text = "1";
-            this.bt1.TabIndex = 3;
-            // Gán sự kiện cho nút 1 (theo Slide 77)
-            this.bt1.Click += new System.EventHandler(this.bt1_Click);
+            // lblComputerCard
+            this.lblComputerCard.AutoSize = true;
+            this.lblComputerCard.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblComputerCard.Location = new System.Drawing.Point(50, 250);  // Tách xa hơn
+            this.lblComputerCard.Name = "lblComputerCard";
+            this.lblComputerCard.Size = new System.Drawing.Size(300, 27);
+            this.lblComputerCard.TabIndex = 1;
+            this.lblComputerCard.Text = "Computer's cards:";
 
-            // (Thêm các khởi tạo khác cho bt0, bt2, btMul, v.v...)
+            // lblResult
+            this.lblResult.AutoSize = true;
+            this.lblResult.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblResult.Location = new System.Drawing.Point(50, 400);  // Tách xa hơn
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(100, 27);
+            this.lblResult.TabIndex = 2;
+            this.lblResult.Text = "Result:";
 
-            // --- Thiết lập Form ---
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            // btnDraw
+            this.btnDraw.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnDraw.Location = new System.Drawing.Point(50, 50);  // Nơi đặt nút
+            this.btnDraw.Name = "btnDraw";
+            this.btnDraw.Size = new System.Drawing.Size(150, 40);
+            this.btnDraw.TabIndex = 3;
+            this.btnDraw.Text = "Draw Cards";
+            this.btnDraw.UseVisualStyleBackColor = true;
+            this.btnDraw.Click += new System.EventHandler(this.BtnDraw_Click);
+
+            // Form6
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-
-            // Thêm Controls vào Form
-            this.Controls.Add(this.btEquals);
-            this.Controls.Add(this.btPlus);
-            this.Controls.Add(this.tbDisplay);
-            this.Controls.Add(this.bt1);
-            // ... (Thêm các Controls khác)
-
-            this.Name = "Form1";
-            this.Text = "Simple Calculator";
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnDraw);
+            this.Controls.Add(this.lblResult);
+            this.Controls.Add(this.lblComputerCard);
+            this.Controls.Add(this.lblPlayerCard);
+            this.Name = "Form6";
+            this.Text = "Card Game";
+            this.Load += new System.EventHandler(this.Form6_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
-        private void bt1_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
