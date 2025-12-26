@@ -37,3 +37,17 @@ C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\maluse_egg.png
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\special_egg.png
 C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\america.jpg
 C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.Form8.resources
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\sound\explosion-42132.mp3
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.dll
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.Asio.dll
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.Core.dll
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.Midi.dll
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\NAudio.WinMM.dll
+C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.csproj.AssemblyReference.cache
+C:\Users\Acer\source\repos\NMHwin\obj\Debug\net8.0-windows\NMHwin.csproj.Up2Date
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\sound\yeah-boy-114748.mp3
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\underwater_bg.png
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\sound\beach-366853.mp3
+C:\Users\Acer\source\repos\NMHwin\bin\Debug\net8.0-windows\image\Boss.png

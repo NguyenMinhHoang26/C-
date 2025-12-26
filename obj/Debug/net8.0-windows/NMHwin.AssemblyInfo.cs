@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NMHwin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ca641305f163bfda5e7884b677f11e1e3e5de78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f09c1f38299b44aa1b82ce18924cec4b620dd5c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("NMHwin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NMHwin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

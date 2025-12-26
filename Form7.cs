@@ -1,315 +1,480 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
-using Timer = System.Windows.Forms.Timer;
+using NAudio.Wave;
+using WinTimer = System.Windows.Forms.Timer;
 
 namespace NMHwin
 {
     public partial class Form7 : Form
     {
-        PictureBox pbBoat = new PictureBox();
-        int boatX = 300;
-        int boatY = 50;
+        // ================= TIMER =================
+        WaveOutEvent sfxOut;
 
+        WinTimer gameTimer;
+
+        // ================= IMAGE =================
+        Image imgBackground, imgBoat, imgFish, imgBomb, imgBoss;
+
+        // ================= BOAT =================
+        PictureBox pbBoat;
+        int boatSpeed = 8;
+        bool moveLeft, moveRight;
+
+        // ================= HOOK =================
+        bool hookDown = false;
         int hookLength = 0;
-        bool hookGoingDown = false;
-        int maxHookLength = 300;
-        int hookSpeed = 5;
-        bool hookHasFish = false;
-        Fish caughtFish = null;
+        int hookSpeed = 12;
 
-        Timer tmFish = new Timer();
-        Timer tmHook = new Timer();
-        Timer tmWater = new Timer();
-        List<Fish> fishes = new List<Fish>();
-        List<Bomb> bombs = new List<Bomb>();
-        Random rand = new Random();
-        Timer tmBoat = new Timer();
-
+        // ================= SCORE / LEVEL / TIME =================
         int score = 0;
-        int waterOffset = 0;
-        int boatWaveOffset = 0;
-        int boatDirection = 1; // 1 = sang phải, -1 = sang trái
-        int boatSpeed = 2;     // tốc độ thuyền
-        int level = 1;  // Initial level
-        int scoreForNextLevel = 5;  // Number of points needed to level up
+        int level = 1;
+        DateTime endTime;
 
+        Random rand = new Random();
+
+        // ================= FISH =================
+        class Fish
+        {
+            public PictureBox Pb;
+            public int Speed;
+            public int Dir;
+        }
+        List<Fish> fishes = new();
+
+        // ================= BOMB =================
+        class Bomb
+        {
+            public PictureBox Pb;
+            public int Speed;
+            public int Dir;
+        }
+        List<Bomb> bombs = new();
+
+        // ================= BOSS =================
+        bool isBossFight = false;
+        int bossHp = 0;
+        PictureBox pbBoss;
+        int bossSpeed = 4;
+        int bossDir = 1;
+
+        // =====================================================
+        // ================= MUSIC =================
+        WaveOutEvent bgOut;
+        AudioFileReader bgReader;
 
         public Form7()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
-            this.KeyPreview = true;
-            this.Load += Form7_Load;
-            this.Paint += Form7_Paint;
-            this.KeyDown += Form7_KeyDown;
+
+            DoubleBuffered = true;
+            KeyPreview = true;
+            WindowState = FormWindowState.Maximized;
+            FormBorderStyle = FormBorderStyle.None;
+
+            gameTimer = new WinTimer();
+            gameTimer.Interval = 30;
+            gameTimer.Tick += GameLoop;
+
+            Paint += Form7_Paint;
+            KeyDown += Form7_KeyDown;
+            KeyUp += Form7_KeyUp;
+            Resize += (s, e) => UpdateBoatY();
         }
 
+        // ================= LOAD =================
         private void Form7_Load(object sender, EventArgs e)
         {
-            // --- Thuyền ---
-            pbBoat.Size = new Size(120, 60);
-            pbBoat.Location = new Point(boatX, boatY);
-            pbBoat.Image = Image.FromFile("image/boat.png");
-            pbBoat.SizeMode = PictureBoxSizeMode.StretchImage;
-            Controls.Add(pbBoat);
-            // --- Timer thuyền ---
-            tmBoat.Interval = 30;
-            tmBoat.Tick += AnimateBoat;
-            tmBoat.Start();
+            imgBackground = LoadImage("image", "underwater_bg.png");
+            imgBoat = LoadImage("image", "boat.png");
+            imgFish = LoadImage("image", "fish.png");
+            imgBomb = LoadImage("image", "bigboy.png");
+            imgBoss = LoadImage("image", "Boss.png");
 
-            // --- Timer hook ---
-            tmHook.Interval = 20;
-            tmHook.Tick += AnimateHook;
-            tmHook.Start();
-
-            // --- Timer cá ---
-            tmFish.Interval = 30;
-            tmFish.Tick += AnimateFish;
-            tmFish.Start();
-
-            // --- Timer nền nước ---
-            tmWater.Interval = 50;
-            tmWater.Tick += AnimateWater;
-            tmWater.Start();
-
-            // --- Spawn cá và bom ---
-            for (int i = 0; i < 5; i++) SpawnFish();
-            for (int i = 0; i < 2; i++) SpawnBomb();
-
-            this.Text = "Điểm: 0 | Level: " + level;  // Update the title to include level
-
-        }
-
-        private void AnimateBoat(object sender, EventArgs e)
-        {
-            boatX += boatSpeed * boatDirection;
-            if (boatX <= 0 || boatX >= this.ClientSize.Width - pbBoat.Width)
-                boatDirection *= -1; // đổi hướng khi chạm biên
-
-            pbBoat.Location = new Point(boatX, boatY + boatWaveOffset);
-            Invalidate();
-        }
-        private void AnimateWater(object sender, EventArgs e)
-        {
-            waterOffset += 1;
-            if (waterOffset > this.ClientSize.Width) waterOffset = 0;
-
-            // Thuyền nhấp nhô nhẹ
-            boatWaveOffset = (int)(5 * Math.Sin(waterOffset * 0.05));
-
-            Invalidate(); // Vẽ lại Form
-        }
-
-        private void Form7_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-
-            // --- Vẽ sóng dưới thuyền ---
-            using (Pen wavePen = new Pen(Color.FromArgb(120, Color.Blue), 2))
+            pbBoat = new PictureBox
             {
-                for (int i = 0; i < this.ClientSize.Width; i += 10)
+                Size = new Size(120, 60),
+                Image = imgBoat,
+                SizeMode = PictureBoxSizeMode.StretchImage
+            };
+            Controls.Add(pbBoat);
+            pbBoat.Left = ClientSize.Width / 2 - pbBoat.Width / 2;
+            UpdateBoatY();
+
+            endTime = DateTime.Now.AddSeconds(30);
+
+            for (int i = 0; i < 5; i++) SpawnFish();
+            SpawnBomb();
+            PlayBackgroundMusic();
+
+
+            gameTimer.Start();
+        }
+
+        // ================= GAME LOOP =================
+        void PlaySfx(string file)
+        {
+            try
+            {
+                string path = Path.Combine(Application.StartupPath, "sound", file);
+                if (!File.Exists(path)) return;
+
+                var reader = new AudioFileReader(path);
+                var output = new WaveOutEvent();
+
+                output.Init(reader);
+                output.Play();
+
+                output.PlaybackStopped += (s, e) =>
                 {
-                    int y = (int)(10 * Math.Sin((i + waterOffset) * 0.1) + boatY + pbBoat.Height / 2);
-                    g.DrawLine(wavePen, i, y, i + 10, y);
-                }
+                    output.Dispose();
+                    reader.Dispose();
+                };
+            }
+            catch { }
+        }
+
+        void GameLoop(object sender, EventArgs e)
+        {
+            if (pbBoat == null) return;
+
+            if ((endTime - DateTime.Now).TotalSeconds <= 0)
+            {
+                GameOver();
+                return;
             }
 
-            // --- Dây câu và mồi ---
-            Pen pen = new Pen(Color.Black, 2);
-            int hookTipX = boatX + pbBoat.Width / 2;
-            int hookTipY = boatY + pbBoat.Height + hookLength;
-            g.DrawLine(pen, boatX + pbBoat.Width / 2, boatY + pbBoat.Height, hookTipX, hookTipY);
-            g.FillEllipse(Brushes.Red, hookTipX - 5, hookTipY - 5, 10, 10);
-            pen.Dispose();
+            if (moveLeft && pbBoat.Left > 0) pbBoat.Left -= boatSpeed;
+            if (moveRight && pbBoat.Right < ClientSize.Width) pbBoat.Left += boatSpeed;
 
-            // --- Thuyền lên trên ---
-            pbBoat.Location = new Point(boatX, boatY + boatWaveOffset);
-            pbBoat.BringToFront();
-
-            // --- Đảm bảo cá và bom nổi trên sóng ---
-            foreach (var f in fishes) f.Pb.BringToFront();
-            foreach (var b in bombs) b.Pb.BringToFront();
-
-            // Vẽ điểm số và cấp độ trực tiếp trên màn hình
-            Font font = new Font("Arial", 16, FontStyle.Bold);
-            Brush brush = Brushes.Black;
-            string text = "Điểm: " + score + " | Level: " + level;
-            g.DrawString(text, font, brush, new PointF(10, 10));  // Điều chỉnh vị trí theo nhu cầu
-        }
-
-        private void AnimateHook(object sender, EventArgs e)
-        {
-            if (hookGoingDown)
+            if (hookDown)
             {
                 hookLength += hookSpeed;
+                CheckHookCatch();
 
-                if (!hookHasFish)
+                if (pbBoat.Bottom + hookLength >= ClientSize.Height)
                 {
-                    // Kiểm tra va chạm với cá
-                    foreach (var f in fishes)
-                    {
-                        Rectangle hookRect = new Rectangle(
-                            boatX + pbBoat.Width / 2 - 5,
-                            boatY + pbBoat.Height + hookLength - 5, 10, 10);
-
-                        if (f.Pb.Bounds.IntersectsWith(hookRect))
-                        {
-                            hookHasFish = true;
-                            caughtFish = f;
-                            break;
-                        }
-                    }
-
-                    // Kiểm tra va chạm với bom
-                    foreach (var b in bombs)
-                    {
-                        Rectangle hookRect = new Rectangle(
-                            boatX + pbBoat.Width / 2 - 5,
-                            boatY + pbBoat.Height + hookLength - 5, 10, 10);
-
-                        if (b.Pb.Bounds.IntersectsWith(hookRect))
-                        {
-                            // Dừng tất cả timer
-                            tmHook.Stop();
-                            tmFish.Stop();
-                            tmWater.Stop();
-                            tmBoat.Stop(); // dừng thuyền
-                            MessageBox.Show($"GAME OVER! Bạn trúng bom!\nĐiểm: {score}", "Game Over", MessageBoxButtons.OK);
-                            this.Close();
-                            return;
-                        }
-                    }
-                }
-
-                if (hookLength >= maxHookLength || hookHasFish)
-                    hookGoingDown = false;
-            }
-            else
-            {
-                hookLength -= hookSpeed;
-                if (hookLength < 0) hookLength = 0;
-
-                if (hookHasFish && caughtFish != null)
-                {
-                    caughtFish.y = boatY + pbBoat.Height + hookLength;
-                    caughtFish.x = boatX + pbBoat.Width / 2 - caughtFish.Pb.Width / 2;
-                    caughtFish.Pb.Location = new Point(caughtFish.x, caughtFish.y);
-
-                    if (hookLength == 0)
-                    {
-                        Controls.Remove(caughtFish.Pb);
-                        fishes.Remove(caughtFish);
-                        hookHasFish = false;
-                        caughtFish = null;
-                        score++;
-                        this.Text = "Điểm: " + score + " | Level: " + level;
-
-
-                        // Check for level up
-                        if (score >= level * scoreForNextLevel)  // Check if player has enough points for next level
-                        {
-                            level++;
-                            scoreForNextLevel *= 2;  // Increase the difficulty for the next level
-                            IncreaseDifficulty();    // Call method to increase difficulty
-                        }
-
-                        SpawnFish();
-                    }
-
+                    hookDown = false;
+                    hookLength = 0;
                 }
             }
 
-            Invalidate();
-        }
-        private void IncreaseDifficulty()
-        {
-            boatSpeed++;
-            for (int i = 0; i < 2; i++) SpawnBomb();
-        }
-
-        private void AnimateFish(object sender, EventArgs e)
-        {
-            // --- Cá di chuyển ---
             foreach (var f in fishes)
             {
-                f.x += f.speed * f.direction;
-                if (f.x < 0 || f.x > this.ClientSize.Width - f.Pb.Width)
-                    f.direction *= -1;
-
-                f.Pb.Image = f.direction == 1 ? Image.FromFile("image/fish.png") : Image.FromFile("image/fish_flip.png");
-                f.Pb.Location = new Point(f.x, f.y);
+                f.Pb.Left += f.Speed * f.Dir;
+                if (f.Pb.Left <= 0 || f.Pb.Right >= ClientSize.Width)
+                    f.Dir *= -1;
             }
 
-            // --- Bomb di chuyển giống cá ---
             foreach (var b in bombs)
             {
-                if (!b.direction.HasValue) b.direction = rand.Next(0, 2) == 0 ? 1 : -1; // khởi tạo hướng nếu null
-                b.x += b.speed * b.direction.Value;
-                if (b.x < 0 || b.x > this.ClientSize.Width - b.Pb.Width)
-                    b.direction *= -1;
+                b.Pb.Left += b.Speed * b.Dir;
+                if (b.Pb.Left <= 0 || b.Pb.Right >= ClientSize.Width)
+                    b.Dir *= -1;
+            }
+            // ===== BOSS MOVE =====
+            if (isBossFight && pbBoss != null)
+            {
+                pbBoss.Left += bossSpeed * bossDir;
+                if (pbBoss.Left <= 0 || pbBoss.Right >= ClientSize.Width)
+                    bossDir *= -1;
+            }
 
-                b.Pb.Location = new Point(b.x, b.y);
+            Invalidate();
+        }
+        void PlayBackgroundMusic()
+        {
+            try
+            {
+                string path = Path.Combine(
+                    Application.StartupPath,
+                    "sound",
+                    "beach-366853.mp3"
+                );
+
+                if (!File.Exists(path)) return;
+
+                bgReader = new AudioFileReader(path);
+                bgOut = new WaveOutEvent();
+                bgOut.Init(bgReader);
+
+                bgOut.PlaybackStopped += BgOut_PlaybackStopped;
+                bgOut.Play();
+            }
+            catch { }
+        }
+
+        void BgOut_PlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            if (bgReader == null || bgOut == null) return;
+            if (bgReader.Position >= bgReader.Length)
+            {
+                bgReader.Position = 0;
+                bgOut.Play();
             }
         }
 
 
-        private void SpawnFish()
+        // ================= HOOK COLLISION =================
+        void CheckHookCatch()
         {
-            Fish f = new Fish();
-            f.Pb = new PictureBox();
-            f.Pb.Size = new Size(40, 20);
-            f.Pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            f.Pb.Image = Image.FromFile("image/fish.png");
-            f.x = rand.Next(50, this.ClientSize.Width - 50);
-            f.y = rand.Next(this.ClientSize.Height / 2 + 50, this.ClientSize.Height - 50);
-            f.speed = rand.Next(2, 4);
-            f.direction = rand.Next(0, 2) == 0 ? 1 : -1;
-            f.Pb.Location = new Point(f.x, f.y);
-            fishes.Add(f);
-            Controls.Add(f.Pb);
+            int hx = pbBoat.Left + pbBoat.Width / 2;
+            Rectangle hookRect = new Rectangle(
+                hx - 5,
+                pbBoat.Bottom + hookLength - 5,
+                10, 10);
+
+            // ===== BOSS =====
+            if (isBossFight && pbBoss != null &&
+                pbBoss.Bounds.IntersectsWith(hookRect))
+            {
+                bossHp--;
+                hookDown = false;
+                hookLength = 0;
+
+                if (bossHp <= 0)
+                    EndBossFight();
+                return;
+            }
+
+            // ===== FISH =====
+            for (int i = fishes.Count - 1; i >= 0; i--)
+            {
+                if (fishes[i].Pb.Bounds.IntersectsWith(hookRect))
+                {
+                    Controls.Remove(fishes[i].Pb);
+                    fishes[i].Pb.Dispose();
+                    fishes.RemoveAt(i);
+
+                    score++;
+                    PlaySfx("yeah-boy-114748.mp3");
+                    CheckLevelUp();
+
+                    hookDown = false;
+                    hookLength = 0;
+                    if (!isBossFight) SpawnFish();
+                    return;
+                }
+            }
+
+            // ===== BOMB =====
+            foreach (var b in bombs)
+            {
+                if (b.Pb.Bounds.IntersectsWith(hookRect))
+                {
+                    PlaySfx("explosion-42132.mp3");
+                    GameOver();
+                    return;
+                }
+            }
         }
 
-        private void SpawnBomb()
+        // ================= LEVEL UP =================
+        void CheckLevelUp()
         {
-            Bomb b = new Bomb();
-            b.Pb = new PictureBox();
-            b.Pb.Size = new Size(30, 30);
-            b.Pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            b.Pb.Image = Image.FromFile("image/bigboy.png");
-            b.x = rand.Next(50, this.ClientSize.Width - 50);
-            b.y = rand.Next(this.ClientSize.Height / 2 + 50, this.ClientSize.Height - 50);
-            b.speed = rand.Next(2, 4);          // tốc độ giống cá
-            b.direction = rand.Next(0, 2) == 0 ? 1 : -1; // hướng di chuyển
-            b.Pb.Location = new Point(b.x, b.y);
-            bombs.Add(b);
-            Controls.Add(b.Pb);
+            if (score >= level * 3)
+            {
+                level++;
+                endTime = DateTime.Now.AddSeconds(30);
+
+                if (level % 5 == 0)
+                    StartBossFight();
+                else
+                    SpawnBomb();
+            }
         }
 
-        private void Form7_KeyDown(object sender, KeyEventArgs e)
+        // ================= BOSS =================
+        void StartBossFight()
         {
-            if (e.KeyCode == Keys.Left && boatX > 0) boatX -= 10;
-            if (e.KeyCode == Keys.Right && boatX < this.ClientSize.Width - pbBoat.Width) boatX += 10;
-            if (e.KeyCode == Keys.Space) hookGoingDown = true;
-            pbBoat.Location = new Point(boatX, boatY + boatWaveOffset);
-            Invalidate();
+            isBossFight = true;
+            bossHp = 3;
+
+            ClearFish();
+            ClearBombs();
+
+            for (int i = 0; i < level * 2; i++)
+                SpawnBomb();
+
+            pbBoss = new PictureBox
+            {
+                Size = new Size(140, 140),
+                Image = imgBoss,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Location = new Point(
+                    ClientSize.Width / 2 - 70,
+                    ClientSize.Height - 220) // dưới đáy
+            };
+            Controls.Add(pbBoss);
         }
-    }
 
-    class Fish
-    {
-        public PictureBox Pb;
-        public int x, y;
-        public int speed;
-        public int direction;
-    }
+        void EndBossFight()
+        {
+            isBossFight = false;
 
-    class Bomb
-    {
-        public PictureBox Pb;
-        public int x, y;
-        public int speed;
-        public int? direction; // 1 hoặc -1
+            Controls.Remove(pbBoss);
+            pbBoss.Dispose();
+            pbBoss = null;
+
+            score += 2;
+            endTime = DateTime.Now.AddSeconds(30);
+
+            for (int i = 0; i < 5; i++) SpawnFish();
+        }
+
+        // ================= SPAWN =================
+        void SpawnFish()
+        {
+            if (isBossFight) return;
+
+            var pb = new PictureBox
+            {
+                Size = new Size(40, 20),
+                Image = imgFish,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Location = new Point(
+                    rand.Next(50, ClientSize.Width - 50),
+                    rand.Next(ClientSize.Height / 2, ClientSize.Height - 60))
+            };
+            Controls.Add(pb);
+
+            fishes.Add(new Fish
+            {
+                Pb = pb,
+                Speed = 2 + level,
+                Dir = rand.Next(0, 2) == 0 ? 1 : -1
+            });
+        }
+
+        void SpawnBomb()
+        {
+            var pb = new PictureBox
+            {
+                Size = new Size(30, 30),
+                Image = imgBomb,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Location = new Point(
+                    rand.Next(50, ClientSize.Width - 50),
+                    rand.Next(ClientSize.Height / 2, ClientSize.Height - 60))
+            };
+            Controls.Add(pb);
+
+            bombs.Add(new Bomb
+            {
+                Pb = pb,
+                Speed = 3 + level * 2,
+                Dir = rand.Next(0, 2) == 0 ? 1 : -1
+            });
+        }
+
+        void ClearFish()
+        {
+            foreach (var f in fishes)
+            {
+                Controls.Remove(f.Pb);
+                f.Pb.Dispose();
+            }
+            fishes.Clear();
+        }
+
+        void ClearBombs()
+        {
+            foreach (var b in bombs)
+            {
+                Controls.Remove(b.Pb);
+                b.Pb.Dispose();
+            }
+            bombs.Clear();
+        }
+
+        // ================= DRAW =================
+        void Form7_Paint(object sender, PaintEventArgs e)
+        {
+            if (imgBackground != null)
+                e.Graphics.DrawImage(imgBackground, ClientRectangle);
+
+            if (hookDown)
+            {
+                int hx = pbBoat.Left + pbBoat.Width / 2;
+                e.Graphics.DrawLine(Pens.Black, hx, pbBoat.Bottom,
+                    hx, pbBoat.Bottom + hookLength);
+                e.Graphics.FillEllipse(Brushes.Red,
+                    hx - 5, pbBoat.Bottom + hookLength - 5, 10, 10);
+            }
+
+            TimeSpan t = endTime - DateTime.Now;
+            if (t < TimeSpan.Zero) t = TimeSpan.Zero;
+
+            e.Graphics.DrawString(
+                $"Score: {score}   Level: {level}   Time: {t:mm\\:ss}",
+                new Font("Arial", 16, FontStyle.Bold),
+                Brushes.White,
+                10, 10);
+        }
+
+        // ================= INPUT =================
+        void Form7_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A) moveLeft = true;
+            if (e.KeyCode == Keys.D) moveRight = true;
+
+            if (e.KeyCode == Keys.Space && !hookDown)
+            {
+                hookDown = true;
+                hookLength = 0;
+            }
+
+            if (e.KeyCode == Keys.Escape) Close();
+        }
+
+        void Form7_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A) moveLeft = false;
+            if (e.KeyCode == Keys.D) moveRight = false;
+        }
+
+        // ================= UTILS =================
+        void UpdateBoatY()
+        {
+            if (pbBoat == null) return;
+            pbBoat.Top = (int)(ClientSize.Height * 0.16) - pbBoat.Height / 2;
+        }
+
+        Image LoadImage(string folder, string file)
+        {
+            try
+            {
+                string path = Path.Combine(Application.StartupPath, folder, file);
+                using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                return Image.FromStream(fs);
+            }
+            catch { return null; }
+        }
+
+        void GameOver()
+        {
+            gameTimer.Stop();
+
+            if (bgOut != null)
+            {
+                bgOut.PlaybackStopped -= BgOut_PlaybackStopped;
+                bgOut.Stop();
+                bgOut.Dispose();
+                bgOut = null;
+            }
+
+            if (bgReader != null)
+            {
+                bgReader.Dispose();
+                bgReader = null;
+            }
+
+            MessageBox.Show($"GAME OVER\nScore: {score}\nLevel: {level}");
+            Close();
+        }
+
+
     }
 }

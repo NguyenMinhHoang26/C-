@@ -101,13 +101,13 @@ namespace NMHwin
             // 
             // button7
             // 
-            button7.Location = new Point(138, 85);
-            button7.Name = "button7";
-            button7.Size = new Size(94, 29);
-            button7.TabIndex = 6;
-            button7.Text = "cau ca";
-            button7.UseVisualStyleBackColor = true;
-            button7.Click += button7_Click;
+            //button7.Location = new Point(138, 85);
+            //button7.Name = "button7";
+            //button7.Size = new Size(94, 29);
+            //button7.TabIndex = 6;
+            //button7.Text = "cau ca";
+            //button7.UseVisualStyleBackColor = true;
+            //button7.Click += button7_Click;
             // 
             // button8
             // 
