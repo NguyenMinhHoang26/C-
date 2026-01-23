@@ -10,60 +10,60 @@ namespace NMHwin
 {
     public partial class Form7 : Form
     {
-        // ================= TIMER =================
-        WaveOutEvent sfxOut;
+        // ===== FIX DUP =====
+        private bool _loadedOnce = false;
 
-        WinTimer gameTimer;
+        // ================= TIMER =================
+        private WinTimer gameTimer;
 
         // ================= IMAGE =================
-        Image imgBackground, imgBoat, imgFish, imgBomb, imgBoss;
+        private Image imgBackground, imgBoat, imgFish, imgBomb, imgBoss;
 
         // ================= BOAT =================
-        PictureBox pbBoat;
-        int boatSpeed = 8;
-        bool moveLeft, moveRight;
+        private PictureBox pbBoat;
+        private int boatSpeed = 20;
+        private bool moveLeft, moveRight;
 
         // ================= HOOK =================
-        bool hookDown = false;
-        int hookLength = 0;
-        int hookSpeed = 12;
+        private bool hookDown = false;
+        private int hookLength = 0;
+        private int hookSpeed = 12;
 
         // ================= SCORE / LEVEL / TIME =================
-        int score = 0;
-        int level = 1;
-        DateTime endTime;
+        private int score = 0;
+        private int level = 1;
+        private DateTime endTime;
 
-        Random rand = new Random();
+        private Random rand = new Random();
 
         // ================= FISH =================
-        class Fish
+        private class Fish
         {
             public PictureBox Pb;
             public int Speed;
             public int Dir;
         }
-        List<Fish> fishes = new();
+        private readonly List<Fish> fishes = new();
 
         // ================= BOMB =================
-        class Bomb
+        private class Bomb
         {
             public PictureBox Pb;
             public int Speed;
             public int Dir;
         }
-        List<Bomb> bombs = new();
+        private readonly List<Bomb> bombs = new();
 
         // ================= BOSS =================
-        bool isBossFight = false;
-        int bossHp = 0;
-        PictureBox pbBoss;
-        int bossSpeed = 4;
-        int bossDir = 1;
+        private bool isBossFight = false;
+        private int bossHp = 0;
+        private PictureBox pbBoss;
+        private int bossSpeed = 10;
+        private int bossDir = 1;
 
-        // =====================================================
         // ================= MUSIC =================
-        WaveOutEvent bgOut;
-        AudioFileReader bgReader;
+        private WaveOutEvent bgOut;
+        private AudioFileReader bgReader;
 
         public Form7()
         {
@@ -71,72 +71,76 @@ namespace NMHwin
 
             DoubleBuffered = true;
             KeyPreview = true;
+
             WindowState = FormWindowState.Maximized;
             FormBorderStyle = FormBorderStyle.None;
 
             gameTimer = new WinTimer();
             gameTimer.Interval = 30;
+
+            // ===== FIX DUP EVENT: gỡ rồi gắn lại để không bị bind 2 lần =====
+            gameTimer.Tick -= GameLoop;
             gameTimer.Tick += GameLoop;
 
-            Paint += Form7_Paint;
-            KeyDown += Form7_KeyDown;
-            KeyUp += Form7_KeyUp;
-            Resize += (s, e) => UpdateBoatY();
+            Load -= Form7_Load; Load += Form7_Load;
+            Paint -= Form7_Paint; Paint += Form7_Paint;
+            KeyDown -= Form7_KeyDown; KeyDown += Form7_KeyDown;
+            KeyUp -= Form7_KeyUp; KeyUp += Form7_KeyUp;
+            Resize -= Form7_Resize; Resize += Form7_Resize;
+            FormClosing -= Form7_FormClosing;
+            FormClosing += Form7_FormClosing;
         }
+
+        private void Form7_Resize(object sender, EventArgs e) => UpdateBoatY();
 
         // ================= LOAD =================
         private void Form7_Load(object sender, EventArgs e)
         {
+            // ===== FIX DUP LOAD =====
+            if (_loadedOnce) return;
+            _loadedOnce = true;
+
             imgBackground = LoadImage("image", "underwater_bg.png");
             imgBoat = LoadImage("image", "boat.png");
             imgFish = LoadImage("image", "fish.png");
             imgBomb = LoadImage("image", "bigboy.png");
             imgBoss = LoadImage("image", "Boss.png");
 
+            // Nền bằng BackgroundImage (không vẽ nền trong Paint)
+            if (imgBackground != null)
+            {
+                BackgroundImage = imgBackground;
+                BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
+            // Nếu có thuyền cũ (do load lại / code khác), xóa trước
+            if (pbBoat != null)
+            {
+                Controls.Remove(pbBoat);
+                pbBoat.Dispose();
+                pbBoat = null;
+            }
+
+            // Boat (tạo đúng 1 lần)
             pbBoat = new PictureBox
             {
-                Size = new Size(120, 60),
+                Size = new Size(150, 100),
                 Image = imgBoat,
-                SizeMode = PictureBoxSizeMode.StretchImage
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                BackColor = Color.Transparent
             };
             Controls.Add(pbBoat);
+            pbBoat.Parent = this;
+            pbBoat.BringToFront();
+
             pbBoat.Left = ClientSize.Width / 2 - pbBoat.Width / 2;
             UpdateBoatY();
 
-            endTime = DateTime.Now.AddSeconds(30);
-
-            for (int i = 0; i < 5; i++) SpawnFish();
-            SpawnBomb();
-            PlayBackgroundMusic();
-
-
-            gameTimer.Start();
+            RestartGameInternal(playMusic: true);
         }
 
         // ================= GAME LOOP =================
-        void PlaySfx(string file)
-        {
-            try
-            {
-                string path = Path.Combine(Application.StartupPath, "sound", file);
-                if (!File.Exists(path)) return;
-
-                var reader = new AudioFileReader(path);
-                var output = new WaveOutEvent();
-
-                output.Init(reader);
-                output.Play();
-
-                output.PlaybackStopped += (s, e) =>
-                {
-                    output.Dispose();
-                    reader.Dispose();
-                };
-            }
-            catch { }
-        }
-
-        void GameLoop(object sender, EventArgs e)
+        private void GameLoop(object sender, EventArgs e)
         {
             if (pbBoat == null) return;
 
@@ -174,7 +178,7 @@ namespace NMHwin
                 if (b.Pb.Left <= 0 || b.Pb.Right >= ClientSize.Width)
                     b.Dir *= -1;
             }
-            // ===== BOSS MOVE =====
+
             if (isBossFight && pbBoss != null)
             {
                 pbBoss.Left += bossSpeed * bossDir;
@@ -184,29 +188,53 @@ namespace NMHwin
 
             Invalidate();
         }
-        void PlayBackgroundMusic()
+
+        // ================= SOUND =================
+        private void PlaySfx(string file)
         {
             try
             {
-                string path = Path.Combine(
-                    Application.StartupPath,
-                    "sound",
-                    "beach-366853.mp3"
-                );
-
+                string path = Path.Combine(Application.StartupPath, "sound", file);
                 if (!File.Exists(path)) return;
+
+                var reader = new AudioFileReader(path);
+                var output = new WaveOutEvent();
+
+                output.Init(reader);
+                output.Play();
+
+                output.PlaybackStopped += (s, e) =>
+                {
+                    output.Dispose();
+                    reader.Dispose();
+                };
+            }
+            catch { }
+        }
+
+        private void PlayBackgroundMusic()
+        {
+            try
+            {
+                string path = Path.Combine(Application.StartupPath, "sound", "beach-366853.mp3");
+                if (!File.Exists(path)) return;
+
+                bgReader?.Dispose();
+                bgOut?.Dispose();
 
                 bgReader = new AudioFileReader(path);
                 bgOut = new WaveOutEvent();
                 bgOut.Init(bgReader);
 
+                bgOut.PlaybackStopped -= BgOut_PlaybackStopped;
                 bgOut.PlaybackStopped += BgOut_PlaybackStopped;
+
                 bgOut.Play();
             }
             catch { }
         }
 
-        void BgOut_PlaybackStopped(object sender, StoppedEventArgs e)
+        private void BgOut_PlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (bgReader == null || bgOut == null) return;
             if (bgReader.Position >= bgReader.Length)
@@ -216,9 +244,8 @@ namespace NMHwin
             }
         }
 
-
         // ================= HOOK COLLISION =================
-        void CheckHookCatch()
+        private void CheckHookCatch()
         {
             int hx = pbBoat.Left + pbBoat.Width / 2;
             Rectangle hookRect = new Rectangle(
@@ -226,20 +253,21 @@ namespace NMHwin
                 pbBoat.Bottom + hookLength - 5,
                 10, 10);
 
-            // ===== BOSS =====
-            if (isBossFight && pbBoss != null &&
-                pbBoss.Bounds.IntersectsWith(hookRect))
+            // Boss
+            if (isBossFight && pbBoss != null && pbBoss.Bounds.IntersectsWith(hookRect))
             {
                 bossHp--;
                 hookDown = false;
                 hookLength = 0;
+
+                PlaySfx("yeah-boy-114748.mp3");
 
                 if (bossHp <= 0)
                     EndBossFight();
                 return;
             }
 
-            // ===== FISH =====
+            // Fish
             for (int i = fishes.Count - 1; i >= 0; i--)
             {
                 if (fishes[i].Pb.Bounds.IntersectsWith(hookRect))
@@ -254,12 +282,13 @@ namespace NMHwin
 
                     hookDown = false;
                     hookLength = 0;
+
                     if (!isBossFight) SpawnFish();
                     return;
                 }
             }
 
-            // ===== BOMB =====
+            // Bomb
             foreach (var b in bombs)
             {
                 if (b.Pb.Bounds.IntersectsWith(hookRect))
@@ -272,7 +301,7 @@ namespace NMHwin
         }
 
         // ================= LEVEL UP =================
-        void CheckLevelUp()
+        private void CheckLevelUp()
         {
             if (score >= level * 3)
             {
@@ -287,7 +316,7 @@ namespace NMHwin
         }
 
         // ================= BOSS =================
-        void StartBossFight()
+        private void StartBossFight()
         {
             isBossFight = true;
             bossHp = 3;
@@ -303,20 +332,26 @@ namespace NMHwin
                 Size = new Size(140, 140),
                 Image = imgBoss,
                 SizeMode = PictureBoxSizeMode.StretchImage,
+                BackColor = Color.Transparent,
                 Location = new Point(
                     ClientSize.Width / 2 - 70,
-                    ClientSize.Height - 220) // dưới đáy
+                    ClientSize.Height - 220)
             };
             Controls.Add(pbBoss);
+            pbBoss.Parent = this;
+            pbBoss.BringToFront();
         }
 
-        void EndBossFight()
+        private void EndBossFight()
         {
             isBossFight = false;
 
-            Controls.Remove(pbBoss);
-            pbBoss.Dispose();
-            pbBoss = null;
+            if (pbBoss != null)
+            {
+                Controls.Remove(pbBoss);
+                pbBoss.Dispose();
+                pbBoss = null;
+            }
 
             score += 2;
             endTime = DateTime.Now.AddSeconds(30);
@@ -325,7 +360,7 @@ namespace NMHwin
         }
 
         // ================= SPAWN =================
-        void SpawnFish()
+        private void SpawnFish()
         {
             if (isBossFight) return;
 
@@ -334,32 +369,38 @@ namespace NMHwin
                 Size = new Size(40, 20),
                 Image = imgFish,
                 SizeMode = PictureBoxSizeMode.StretchImage,
+                BackColor = Color.Transparent,
                 Location = new Point(
-                    rand.Next(50, ClientSize.Width - 50),
-                    rand.Next(ClientSize.Height / 2, ClientSize.Height - 60))
+                    rand.Next(50, Math.Max(51, ClientSize.Width - 50)),
+                    rand.Next(Math.Max(1, ClientSize.Height / 2), Math.Max(2, ClientSize.Height - 60)))
             };
             Controls.Add(pb);
+            pb.Parent = this;
+            pb.BringToFront();
 
             fishes.Add(new Fish
             {
                 Pb = pb,
-                Speed = 2 + level,
+                Speed = 20 + level,
                 Dir = rand.Next(0, 2) == 0 ? 1 : -1
             });
         }
 
-        void SpawnBomb()
+        private void SpawnBomb()
         {
             var pb = new PictureBox
             {
                 Size = new Size(30, 30),
                 Image = imgBomb,
                 SizeMode = PictureBoxSizeMode.StretchImage,
+                BackColor = Color.Transparent,
                 Location = new Point(
-                    rand.Next(50, ClientSize.Width - 50),
-                    rand.Next(ClientSize.Height / 2, ClientSize.Height - 60))
+                    rand.Next(50, Math.Max(51, ClientSize.Width - 50)),
+                    rand.Next(Math.Max(1, ClientSize.Height / 2), Math.Max(2, ClientSize.Height - 60)))
             };
             Controls.Add(pb);
+            pb.Parent = this;
+            pb.BringToFront();
 
             bombs.Add(new Bomb
             {
@@ -369,7 +410,7 @@ namespace NMHwin
             });
         }
 
-        void ClearFish()
+        private void ClearFish()
         {
             foreach (var f in fishes)
             {
@@ -379,7 +420,7 @@ namespace NMHwin
             fishes.Clear();
         }
 
-        void ClearBombs()
+        private void ClearBombs()
         {
             foreach (var b in bombs)
             {
@@ -390,18 +431,13 @@ namespace NMHwin
         }
 
         // ================= DRAW =================
-        void Form7_Paint(object sender, PaintEventArgs e)
+        private void Form7_Paint(object sender, PaintEventArgs e)
         {
-            if (imgBackground != null)
-                e.Graphics.DrawImage(imgBackground, ClientRectangle);
-
-            if (hookDown)
+            if (hookDown && pbBoat != null)
             {
                 int hx = pbBoat.Left + pbBoat.Width / 2;
-                e.Graphics.DrawLine(Pens.Black, hx, pbBoat.Bottom,
-                    hx, pbBoat.Bottom + hookLength);
-                e.Graphics.FillEllipse(Brushes.Red,
-                    hx - 5, pbBoat.Bottom + hookLength - 5, 10, 10);
+                e.Graphics.DrawLine(Pens.Black, hx, pbBoat.Bottom, hx, pbBoat.Bottom + hookLength);
+                e.Graphics.FillEllipse(Brushes.Red, hx - 5, pbBoat.Bottom + hookLength - 5, 10, 10);
             }
 
             TimeSpan t = endTime - DateTime.Now;
@@ -415,7 +451,7 @@ namespace NMHwin
         }
 
         // ================= INPUT =================
-        void Form7_KeyDown(object sender, KeyEventArgs e)
+        private void Form7_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A) moveLeft = true;
             if (e.KeyCode == Keys.D) moveRight = true;
@@ -429,20 +465,21 @@ namespace NMHwin
             if (e.KeyCode == Keys.Escape) Close();
         }
 
-        void Form7_KeyUp(object sender, KeyEventArgs e)
+        private void Form7_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A) moveLeft = false;
             if (e.KeyCode == Keys.D) moveRight = false;
         }
 
         // ================= UTILS =================
-        void UpdateBoatY()
+        private void UpdateBoatY()
         {
             if (pbBoat == null) return;
             pbBoat.Top = (int)(ClientSize.Height * 0.16) - pbBoat.Height / 2;
+            pbBoat.BringToFront();
         }
 
-        Image LoadImage(string folder, string file)
+        private Image LoadImage(string folder, string file)
         {
             try
             {
@@ -453,28 +490,80 @@ namespace NMHwin
             catch { return null; }
         }
 
-        void GameOver()
+        // ================= GAME OVER / RESTART =================
+        private void GameOver()
         {
             gameTimer.Stop();
 
-            if (bgOut != null)
-            {
-                bgOut.PlaybackStopped -= BgOut_PlaybackStopped;
-                bgOut.Stop();
-                bgOut.Dispose();
-                bgOut = null;
-            }
+            var result = MessageBox.Show(
+                $"GAME OVER\nScore: {score}\nLevel: {level}\n\nChơi lại?",
+                "Game Over",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information);
 
-            if (bgReader != null)
-            {
-                bgReader.Dispose();
-                bgReader = null;
-            }
-
-            MessageBox.Show($"GAME OVER\nScore: {score}\nLevel: {level}");
-            Close();
+            if (result == DialogResult.Yes)
+                RestartGameInternal(playMusic: false);
+            else
+                Close();
         }
 
+        private void RestartGameInternal(bool playMusic)
+        {
+            hookDown = false;
+            hookLength = 0;
+            moveLeft = moveRight = false;
 
+            score = 0;
+            level = 1;
+            endTime = DateTime.Now.AddSeconds(30);
+
+            ClearFish();
+            ClearBombs();
+
+            if (pbBoss != null)
+            {
+                Controls.Remove(pbBoss);
+                pbBoss.Dispose();
+                pbBoss = null;
+            }
+            isBossFight = false;
+            bossHp = 0;
+
+            if (pbBoat != null)
+            {
+                pbBoat.Left = ClientSize.Width / 2 - pbBoat.Width / 2;
+                UpdateBoatY();
+                pbBoat.BackColor = Color.Transparent;
+                pbBoat.BringToFront();
+            }
+
+            for (int i = 0; i < 5; i++) SpawnFish();
+            SpawnBomb();
+
+            if (playMusic) PlayBackgroundMusic();
+
+            gameTimer.Start();
+            Invalidate();
+        }
+
+        private void Form7_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                gameTimer?.Stop();
+
+                if (bgOut != null)
+                {
+                    bgOut.PlaybackStopped -= BgOut_PlaybackStopped;
+                    bgOut.Stop();
+                    bgOut.Dispose();
+                    bgOut = null;
+                }
+
+                bgReader?.Dispose();
+                bgReader = null;
+            }
+            catch { }
+        }
     }
 }

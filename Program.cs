@@ -9,7 +9,7 @@ namespace NMHwin
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form7());
+            Application.Run(new Form8());
         }
     }
 }
