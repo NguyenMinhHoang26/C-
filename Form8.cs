@@ -11,6 +11,8 @@ namespace NMHwin
         private readonly string connStr =
             @"Data Source=.\SQLEXPRESS;Initial Catalog=sale;Integrated Security=True;TrustServerCertificate=True;";
 
+        private readonly string _username;
+
         private TextBox tbId, tbName, tbLop, tbKhuVuc;
         private DateTimePicker dtpNgaySinh;
         private ComboBox cbGioiTinh;
@@ -19,10 +21,17 @@ namespace NMHwin
 
         private byte[] _currentImageBytes = null;
 
-        public Form8()
+        // lưu ID cũ để sửa có đổi ID hay không
+        private int? _selectedOldId = null;
+
+        public Form8(string username)
         {
+            _username = username;
             InitializeComponent();
             SetupBottomLayoutNice();
+
+            Font = new Font("Segoe UI", 10);
+            Text = $"ADO Example - User: {_username}";
         }
 
         private void Form8_Load(object sender, EventArgs e)
@@ -34,9 +43,10 @@ namespace NMHwin
             dgvCustomer.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
             LoadData();
+            ClearInputs();
         }
 
-        // =================== LAYOUT ĐẸP (TABLELAYOUT) ===================
+        // =================== LAYOUT INPUT ĐẸP ===================
         private void SetupBottomLayoutNice()
         {
             panelBottom.Controls.Clear();
@@ -48,15 +58,15 @@ namespace NMHwin
             tbl.ColumnCount = 8;
             tbl.RowCount = 2;
 
-            tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 85));
+            tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 90));
             tbl.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90));    // ID
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 38));     // Tên
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));     // Tên
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 110));   // Lớp
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150));   // Ngày sinh
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130));   // Giới tính
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24));     // Khu vực
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22));     // Khu vực
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));   // Ảnh
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));   // Chọn ảnh
 
@@ -84,10 +94,7 @@ namespace NMHwin
                 Value = new DateTime(2000, 1, 1)
             };
 
-            cbGioiTinh = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList
-            };
+            cbGioiTinh = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList };
             cbGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ", "Khác" });
             cbGioiTinh.SelectedIndex = 0;
 
@@ -97,11 +104,7 @@ namespace NMHwin
                 SizeMode = PictureBoxSizeMode.Zoom
             };
 
-            btChonAnh = new Button
-            {
-                Text = "Chọn ảnh",
-                Dock = DockStyle.Fill
-            };
+            btChonAnh = new Button { Text = "Chọn ảnh", Dock = DockStyle.Fill };
             btChonAnh.Click += btChonAnh_Click;
 
             tbl.Controls.Add(MakeBox("ID", tbId), 0, 0);
@@ -169,6 +172,16 @@ namespace NMHwin
             }
         }
 
+        // =================== CHECK EXISTS ID ===================
+        private bool CustomerIdExists(int id)
+        {
+            using SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+            using var cmd = new SqlCommand("SELECT COUNT(1) FROM dbo.customer WHERE id=@id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+        }
+
         // =================== LOAD ===================
         private void LoadData()
         {
@@ -178,7 +191,7 @@ namespace NMHwin
             conn.Open();
 
             using var cmd = new SqlCommand(
-                "SELECT id, name, lop, ngaysinh, gioitinh, khuvuc, anh FROM customer ORDER BY id", conn);
+                "SELECT id, name, lop, ngaysinh, gioitinh, khuvuc, anh FROM dbo.customer ORDER BY id", conn);
 
             using var rd = cmd.ExecuteReader();
             while (rd.Read())
@@ -186,7 +199,6 @@ namespace NMHwin
                 int id = rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
                 string name = rd.IsDBNull(1) ? "" : rd.GetString(1);
                 string lop = rd.IsDBNull(2) ? "" : rd.GetString(2);
-
                 object ngaySinhObj = rd.IsDBNull(3) ? null : rd.GetDateTime(3).ToString("dd/MM/yyyy");
                 string gioitinh = rd.IsDBNull(4) ? "" : rd.GetString(4);
                 string khuvuc = rd.IsDBNull(5) ? "" : rd.GetString(5);
@@ -200,7 +212,7 @@ namespace NMHwin
 
         private void btRead_Click(object sender, EventArgs e) => LoadData();
 
-        // =================== CLICK -> FILL INPUTS ===================
+        // =================== CLICK -> FILL + LƯU ID CŨ ===================
         private void dgvCustomer_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -229,11 +241,27 @@ namespace NMHwin
             pbAnh.Image = img;
             _currentImageBytes = ImageToBytes(img);
 
+            _selectedOldId = int.TryParse(tbId.Text.Trim(), out var oldId) ? oldId : (int?)null;
+
             tbName.Focus();
             tbName.SelectionStart = tbName.Text.Length;
         }
 
-        // =================== ADD ===================
+        private void ClearInputs()
+        {
+            tbId.Clear();
+            tbName.Clear();
+            tbLop.Clear();
+            tbKhuVuc.Clear();
+            dtpNgaySinh.Value = new DateTime(2000, 1, 1);
+            cbGioiTinh.SelectedIndex = 0;
+            pbAnh.Image = null;
+            _currentImageBytes = null;
+            _selectedOldId = null;
+            tbId.Focus();
+        }
+
+        // =================== ADD (CHẶN TRÙNG ID) ===================
         private void btNew_Click(object sender, EventArgs e)
         {
             dgvCustomer.EndEdit();
@@ -245,6 +273,15 @@ namespace NMHwin
             if (!int.TryParse(tbId.Text.Trim(), out int id))
             {
                 MessageBox.Show("ID phải là số!");
+                tbId.Focus();
+                tbId.SelectAll();
+                return;
+            }
+
+            if (CustomerIdExists(id))
+            {
+                MessageBox.Show($"Mã {id} đã tồn tại! Không thể thêm.", "Trùng mã",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbId.Focus();
                 tbId.SelectAll();
                 return;
@@ -270,7 +307,7 @@ namespace NMHwin
                 conn.Open();
 
                 using var cmd = new SqlCommand(
-                    @"INSERT INTO customer (id, name, lop, ngaysinh, gioitinh, khuvuc, anh)
+                    @"INSERT INTO dbo.customer (id, name, lop, ngaysinh, gioitinh, khuvuc, anh)
                       VALUES (@id, @name, @lop, @ngaysinh, @gioitinh, @khuvuc, @anh)", conn);
 
                 cmd.Parameters.AddWithValue("@id", id);
@@ -293,27 +330,22 @@ namespace NMHwin
             }
         }
 
-        private void ClearInputs()
-        {
-            tbId.Clear();
-            tbName.Clear();
-            tbLop.Clear();
-            tbKhuVuc.Clear();
-            dtpNgaySinh.Value = new DateTime(2000, 1, 1);
-            cbGioiTinh.SelectedIndex = 0;
-            pbAnh.Image = null;
-            _currentImageBytes = null;
-            tbId.Focus();
-        }
-
-        // =================== EDIT ===================
+        // =================== EDIT (CHO ĐỔI ID NHƯNG CHẶN TRÙNG) ===================
         private void btEdit_Click(object sender, EventArgs e)
         {
             dgvCustomer.EndEdit();
 
-            if (!int.TryParse(tbId.Text.Trim(), out int id))
+            if (_selectedOldId == null)
+            {
+                MessageBox.Show("Bạn hãy click chọn 1 dòng cần sửa trước!");
+                return;
+            }
+
+            if (!int.TryParse(tbId.Text.Trim(), out int newId))
             {
                 MessageBox.Show("ID phải là số!");
+                tbId.Focus();
+                tbId.SelectAll();
                 return;
             }
 
@@ -321,6 +353,18 @@ namespace NMHwin
             if (string.IsNullOrWhiteSpace(name))
             {
                 MessageBox.Show("Tên không được để trống!");
+                tbName.Focus();
+                return;
+            }
+
+            int oldId = _selectedOldId.Value;
+
+            if (newId != oldId && CustomerIdExists(newId))
+            {
+                MessageBox.Show($"Mã {newId} đã tồn tại! Không thể sửa trùng mã.", "Trùng mã",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbId.Focus();
+                tbId.SelectAll();
                 return;
             }
 
@@ -336,11 +380,12 @@ namespace NMHwin
                 conn.Open();
 
                 using var cmd = new SqlCommand(
-                    @"UPDATE customer
-                      SET name=@name, lop=@lop, ngaysinh=@ngaysinh, gioitinh=@gioitinh, khuvuc=@khuvuc, anh=@anh
-                      WHERE id=@id", conn);
+                    @"UPDATE dbo.customer
+                      SET id=@newId, name=@name, lop=@lop, ngaysinh=@ngaysinh, gioitinh=@gioitinh, khuvuc=@khuvuc, anh=@anh
+                      WHERE id=@oldId", conn);
 
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@oldId", oldId);
+                cmd.Parameters.AddWithValue("@newId", newId);
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@lop", (object)(lop ?? ""));
                 cmd.Parameters.AddWithValue("@ngaysinh", ngaysinh);
@@ -348,10 +393,16 @@ namespace NMHwin
                 cmd.Parameters.AddWithValue("@khuvuc", (object)(khuvuc ?? ""));
                 cmd.Parameters.AddWithValue("@anh", (object)anh ?? DBNull.Value);
 
-                cmd.ExecuteNonQuery();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    MessageBox.Show("Không tìm thấy bản ghi để cập nhật (có thể đã bị xóa).");
+                    return;
+                }
 
                 LoadData();
                 MessageBox.Show("Đã cập nhật!");
+                _selectedOldId = newId; // cập nhật lại ID cũ sau khi đổi ID
             }
             catch (SqlException ex)
             {
@@ -379,7 +430,7 @@ namespace NMHwin
                 using SqlConnection conn = new SqlConnection(connStr);
                 conn.Open();
 
-                using var cmd = new SqlCommand("DELETE FROM customer WHERE id=@id", conn);
+                using var cmd = new SqlCommand("DELETE FROM dbo.customer WHERE id=@id", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
 

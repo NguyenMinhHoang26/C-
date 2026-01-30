@@ -1,0 +1,14 @@
+[
+  {
+    "Username": "admin",
+    "SaltB64": "Ns5o6S8sVjR27sZ22lqbfw==",
+    "HashB64": "6dIITzVOdhRZHFrkQy4x8NqN8Oey\u002BykFXmlurRQ0Ogg=",
+    "Iterations": 100000
+  },
+  {
+    "Username": "adm",
+    "SaltB64": "zlb\u002BTwJ\u002B4jR3ND4JxbJoBA==",
+    "HashB64": "yAnPODGwInChKDu5ibrcZZ5aLnkOadp\u002BXMqgdDPKBbg=",
+    "Iterations": 100000
+  }
+]

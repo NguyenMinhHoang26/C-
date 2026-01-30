@@ -112,7 +112,7 @@
 
             // panelBottom
             panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panelBottom.Height = 170;
+            panelBottom.Height = 190;
             panelBottom.Name = "panelBottom";
 
             // btRead
@@ -147,7 +147,7 @@
 
             // Form8
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1150, 650);
+            ClientSize = new System.Drawing.Size(1200, 680);
             Controls.Add(dgvCustomer);
             Controls.Add(panelBottom);
             Name = "Form8";

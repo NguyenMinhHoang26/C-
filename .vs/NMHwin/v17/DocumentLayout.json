@@ -3,12 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Acer\\source\\repos\\NMHwin\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\form8.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:form8.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\form8.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:form8.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\form8.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:form8.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\formlogin.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:formlogin.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|c:\\users\\acer\\source\\repos\\nmhwin\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F840591B-946F-426F-914B-3861570CBE00}|NMHwin.csproj|C:\\Users\\Acer\\source\\repos\\NMHwin\\form8.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -22,43 +38,96 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormLogin.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\FormLogin.Designer.cs",
+              "RelativeDocumentMoniker": "FormLogin.Designer.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\FormLogin.Designer.cs",
+              "RelativeToolTip": "FormLogin.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T06:55:47.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T06:47:16.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormLogin.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\FormLogin.cs",
+              "RelativeDocumentMoniker": "FormLogin.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\FormLogin.cs",
+              "RelativeToolTip": "FormLogin.cs",
+              "ViewState": "AgIAALMAAAAAAAAAAAAkwNAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T06:45:09.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "FormLogin.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\FormLogin.cs",
+              "RelativeDocumentMoniker": "FormLogin.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\FormLogin.cs [Design]",
+              "RelativeToolTip": "FormLogin.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T06:44:56.391Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Form8.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Form8.cs",
               "RelativeDocumentMoniker": "Form8.cs",
               "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Form8.cs [Design]",
               "RelativeToolTip": "Form8.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-23T06:41:37.576Z"
+              "WhenOpened": "2026-01-23T06:41:37.576Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Form8.Designer.cs",
               "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Form8.Designer.cs",
               "RelativeDocumentMoniker": "Form8.Designer.cs",
               "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Form8.Designer.cs",
               "RelativeToolTip": "Form8.Designer.cs",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAcwIIAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAkwKIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-09T07:22:50.775Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form8.cs",
               "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Form8.cs",
               "RelativeDocumentMoniker": "Form8.cs",
               "ToolTip": "C:\\Users\\Acer\\source\\repos\\NMHwin\\Form8.cs",
               "RelativeToolTip": "Form8.cs",
-              "ViewState": "AgIAAG0BAAAAAAAAAAAcwI4BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKUBAAAAAAAAAAAgwMEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-09T06:16:45.097Z"
+              "WhenOpened": "2026-01-09T06:16:45.097Z",
+              "EditorCaption": ""
             }
           ]
         }

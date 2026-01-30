@@ -1,0 +1,315 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\game\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\game\\map.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\game\\entities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\game\\entities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\game\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\game\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\forms\\gameform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\gameform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\forms\\mainmenuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\mainmenuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\towerdefensevs2022\\forms\\mainmenuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\mainmenuform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\game\\ais.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\game\\ais.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\forms\\gameform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\gameform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\towerdefensevs2022\\forms\\gameform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\gameform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\game\\soundmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\game\\soundmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\forms\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\forms\\loginform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\loginform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\towerdefensevs2022\\forms\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\forms\\doublebufferedpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\forms\\doublebufferedpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\auth\\userstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\auth\\userstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\auth\\passwordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\auth\\passwordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|c:\\users\\acer\\downloads\\towerdefensevs2022\\towerdefensevs2022\\auth\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A755A7-2FD5-4D15-9DA1-1CF3CCF36FD4}|TowerDefenseVS2022\\TowerDefenseVS2022.csproj|solutionrelative:towerdefensevs2022\\auth\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GameForm.resx",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\GameForm.resx",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\GameForm.resx",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\GameForm.resx",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\GameForm.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-01-30T08:05:12.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SoundManager.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\SoundManager.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Game\\SoundManager.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\SoundManager.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Game\\SoundManager.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAA5wCkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T07:05:31.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Entities.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\Entities.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Game\\Entities.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\Entities.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Game\\Entities.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:23:57.755Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Map.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\Map.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Game\\Map.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\Map.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Game\\Map.cs",
+              "ViewState": "AgIAAMkAAAAAAAAAAAAqwN8AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:23:23.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LoginForm.resx",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\LoginForm.resx",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\LoginForm.resx",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\LoginForm.resx",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\LoginForm.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-01-30T03:22:13.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LoginForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\LoginForm.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\LoginForm.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\LoginForm.cs [Design]",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\LoginForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:22:05.362Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GameForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\GameForm.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\GameForm.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\GameForm.cs [Design]",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\GameForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:03:56.85Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameForm.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\GameForm.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\GameForm.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\GameForm.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\GameForm.cs",
+              "ViewState": "AgIAAJQDAAAAAAAAAAAAwKwDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T02:36:16.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Program.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Program.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Program.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T02:35:49.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameState.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\GameState.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Game\\GameState.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\GameState.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Game\\GameState.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAEsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:24:15.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AIs.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\AIs.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Game\\AIs.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Game\\AIs.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Game\\AIs.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAcwDAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:24:27.706Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "LoginForm.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\LoginForm.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\LoginForm.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\LoginForm.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\LoginForm.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAYwGYAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:22:20.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DoubleBufferedPanel.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\DoubleBufferedPanel.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\DoubleBufferedPanel.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\DoubleBufferedPanel.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\DoubleBufferedPanel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:21:36.981Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserStore.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Auth\\UserStore.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Auth\\UserStore.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Auth\\UserStore.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Auth\\UserStore.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAA1wDEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:21:10.917Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PasswordHasher.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Auth\\PasswordHasher.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Auth\\PasswordHasher.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Auth\\PasswordHasher.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Auth\\PasswordHasher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:21:00.071Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainMenuForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\MainMenuForm.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\MainMenuForm.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\MainMenuForm.cs [Design]",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\MainMenuForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T02:48:39.376Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainMenuForm.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\MainMenuForm.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Forms\\MainMenuForm.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Forms\\MainMenuForm.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Forms\\MainMenuForm.cs",
+              "ViewState": "AgIAAK8AAAAAAAAAAAAAAMwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T02:46:24.743Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Auth\\User.cs",
+              "RelativeDocumentMoniker": "TowerDefenseVS2022\\Auth\\User.cs",
+              "ToolTip": "C:\\Users\\Acer\\Downloads\\TowerDefenseVS2022\\TowerDefenseVS2022\\Auth\\User.cs",
+              "RelativeToolTip": "TowerDefenseVS2022\\Auth\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T03:20:49.436Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
